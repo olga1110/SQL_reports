@@ -1,0 +1,23 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1  AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_inst t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+	(SELECT COUNT ( *)  AS Count_Detail_1 FROM
+	(
+	SELECT DISTINCT ACQ_TERMINAL_LIST_ID, AMND_DATE
+	FROM FT21_1_057_DB_STG.B0571131410001_ACQ_TERMINAL t 
+    ) AS z2) AS z3
+ 
+ 
+-------------------------------------------------------è-------------------------------------------------------------------------------------------------------------  
+
+SELECT a.ACQ_TERMINAL_LIST_ID, c.chnl_inst_id FROM FT21_1_057_DB_STG.B0571131410001_ACQ_TERMINAL a
+LEFT JOIN FT21_1_057_DB_tmd.k_chnl_inst_nk04  b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID 
+LEFT JOIN FT21_1_057_DB_STG.ti_chnl_inst c ON c.chnl_inst_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE c.chnl_inst_id IS NULL  
+

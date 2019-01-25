@@ -1,0 +1,33 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif -- проверка равенства количества строк в  t_int_org  и t_fin_inst_int_org
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_int_org 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.ti_fin_inst_int_org 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	 ) AS z2 
+
+---------------------------------------------ВСП: проверка наименования-----------------------------------------------------------
+
+SELECT a.ACQ_OWNER_LIST_ID, c.int_org_pty_id
+FROM ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a 
+LEFT JOIN ft21_1_057_db_tmd.K_PTY_NK82 b ON a.CB_CODE||'/'||a.FILIAL = b.NK82_OWN_CODE 
+LEFT JOIN ft21_1_057_db_stg.ti_fin_inst_int_org c ON c.int_org_pty_id = b.tgt_id AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')  AND deleted_flag = 'N'
+WHERE  a.FILIAL IS NOT NULL AND c.int_org_pty_id IS NULL  OR (SUBSTR (a.CB_CODE, 1,2)||SUBSTR (a.CB_CODE, 5,4) ||'/'||a.FILIAL<> c.org_num)
+
+-------------------------- ---------------- ------------------ ОСБ: проверка наименования ------------------------ 
+
+SELECT a.CB_CODE, c.int_org_pty_id
+FROM ft21_1_057_db_stg.B0571131410006_ACQ_WAY4_FI a 
+LEFT JOIN ft21_1_057_db_tmd.K_PTY_NK77 b ON a.CB_CODE = b.NK77_WAY4_CODE 
+LEFT JOIN ft21_1_057_db_stg.ti_fin_inst_int_org c ON c.int_org_pty_id = b.tgt_id AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')  AND deleted_flag = 'N'
+WHERE  c.int_org_pty_id IS NULL  OR (SUBSTR(a.CB_CODE,1,2)||SUBSTR(a.CB_CODE,5,4) <> c.org_num)
+
+
+

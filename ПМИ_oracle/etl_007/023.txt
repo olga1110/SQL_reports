@@ -1,0 +1,58 @@
+SELECT a.ACQ_MERCHANT_LIST_ID, c.org_pty_id
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_stg.B0571131410003_ACQ_OWNER d ON d.ACQ_OWNER_LIST_ID = a.ACQ_OWNER_LIST_ID AND a.TERMINAL_TYPE = 'POS SALE'
+LEFT JOIN ft21_1_057_db_tmd.K_PTY_nk83 b ON a.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_org_lvl c ON c.org_pty_id = b.tgt_id AND c.pty_struct_type_id = - 1006
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+AND c.org_pty_id IS NULL
+
+
+
+
+--------------------------------------Торговая точка ----------------------------------------------------------  
+
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif  
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_org_lvl 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') 
+	AND deleted_flag = 'N' AND org_lvl_id = - 1002 AND pty_struct_type_id = - 1006
+	) AS z1,
+
+(SELECT A.ACQ_OWNER_LIST_ID AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL b, ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a
+	WHERE a.ACQ_OWNER_LIST_ID = B.ACQ_OWNER_LIST_ID AND b.TERMINAL_TYPE = 'POS SALE' AND
+A.ACQ_OWNER_LIST_ID NOT IN (SELECT ACQ_OWNER_LIST_ID_PARENT FROM  ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a WHERE  a.ACQ_OWNER_LIST_ID_PARENT IS NOT NULL)) AS z2 
+
+
+--------------------------------------Торговая организация ----------------------------------------------------------  
+
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif  
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_org_lvl 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') 
+	AND deleted_flag = 'N' AND org_lvl_id = - 1001 AND pty_struct_type_id = - 1006
+	) AS z1,
+
+(SELECT A.ACQ_OWNER_LIST_ID AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL b, ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a
+	WHERE a.ACQ_OWNER_LIST_ID = B.ACQ_OWNER_LIST_ID AND b.TERMINAL_TYPE = 'POS SALE' AND
+A.ACQ_OWNER_LIST_ID NOT IN (SELECT ACQ_OWNER_LIST_ID_PARENT FROM  ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a WHERE  a.ACQ_OWNER_LIST_ID_PARENT IS NOT NULL)) AS z2 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

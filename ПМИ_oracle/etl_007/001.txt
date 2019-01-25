@@ -1,0 +1,71 @@
+-- проверка равенства количества терминалов c признаком разница часовых поясов 
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_chnl_inst_text_hist t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_inst_text_type_id = - 1004
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a
+WHERE  a.GMT_OFFSET IS NOT NULL 
+ ) AS z2
+ 
+ 
+-- проверка равенства количества терминалов c признаком Место установки УС  
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1  AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_chnl_inst_text_hist t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_inst_text_type_id = - 1005
+		) AS z1, 
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a, ft21_1_057_db_stg.B0571131410007_ACQ_TER_DETAIL b
+    WHERE  a.TERMINAL_TYPE IN ('ATM', 'ITT') AND a. ACQ_TERMINAL_LIST_ID =  b. ACQ_TERMINAL_LIST_ID AND  COALESCE (b.SERVICE_INST_ORG, b.INST_LOCATION) IS NOT NULL
+ ) AS z2
+ 
+
+ -- Проверка соответствия заполнения признака разница часовых поясов 
+ 
+ SELECT
+a.ACQ_TERMINAL_LIST_ID, 
+a.GMT_OFFSET, 
+c.chnl_inst_id, 
+c.chnl_inst_txt
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04 b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_text_hist  c ON c.chnl_inst_id = b.tgt_id 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+AND c.chnl_inst_text_type_id = - 1004 
+AND c.chnl_inst_txt <> CAST(a.GMT_OFFSET AS VARCHAR (4000)) 
+
+
+-- Проверка соответствия заполнения признака место установки для atm, itt 
+  
+ 
+SELECT 
+ter.ACQ_TERMINAL_LIST_ID 
+,c.chnl_inst_id 
+,c.chnl_inst_txt
+FROM ft21_1_057_db_stg.B0571131410007_ACQ_TER_DETAIL a 
+INNER JOIN ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL ter ON ter.ACQ_TERMINAL_LIST_ID = a.ACQ_TERMINAL_LIST_ID 
+INNER JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04 b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_text_hist  c ON c.chnl_inst_id = b.tgt_id 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+AND c.chnl_inst_text_type_id = - 1005 AND ter.TERMINAL_TYPE IN  ('ATM', 'ITT' ) AND COALESCE (a.SERVICE_INST_ORG, a.INST_LOCATION) IS NOT NULL
+AND COALESCE (c.chnl_inst_txt, -1) <> COALESCE (a.SERVICE_INST_ORG, a.INST_LOCATION, -1) 
+
+
+
+
+
+
+
+

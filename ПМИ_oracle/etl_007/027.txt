@@ -1,0 +1,79 @@
+
+SELECT Count_Detail, Count_Detail_1, Count_Detail_2, Count_Detail_3, Count_Detail - Count_Detail_1 - Count_Detail_2 - Count_Detail_3 AS dif     
+FROM 
+         (
+         SELECT COUNT (*) AS Count_Detail
+         FROM ft21_1_057_db_stg.ti_chnl_inst_loc t
+         WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+         AND deleted_flag = 'N'   
+                   ) AS z1, 
+         (
+         SELECT COUNT (*)  AS Count_Detail_1
+         FROM ft21_1_057_db_stg.si0571131410001_ACQ_TERMINAL a 
+WHERE   a.NET_ADDRESS IS NOT NULL --NET_ADDRESS
+) AS z2,
+(       SELECT COUNT (*)  AS Count_Detail_2
+         FROM ft21_1_057_db_stg.si0571131410007_ACQ_TER_DETAIL a 
+WHERE  a. LATITUDE IS NOT NULL OR a. LONGITUDE IS NOT NULL -- GS
+) AS z3, -- 
+  ( SELECT COUNT (*)  AS Count_Detail_3
+         FROM ft21_1_057_db_stg.s0571131410001_ACQ_TERMINAL a 
+         INNER JOIN ft21_1_057_db_stg.si0571131410003_ACQ_OWNER t ON t.ACQ_OWNER_LIST_ID = a.ACQ_OWNER_LIST_ID 
+WHERE   t.ADDRESS_CYR IS NOT NULL  -- ADDRESS_CYR 
+ ) AS z4 --
+ 
+ 
+--  SK (NK66_TERM_TERM_LIST_ID = TERMINAL.ACQ_TERMINAL_LIST_ID, NK66_CONST = 1)
+
+--NET_ADDRESS
+SELECT a.ACQ_TERMINAL_LIST_ID, c.chnl_inst_id
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04 b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_loc c ON c.chnl_inst_id = b.tgt_id AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')  AND deleted_flag = 'N' 
+WHERE a.NET_ADDRESS IS NOT NULL AND c.chnl_inst_id IS NULL 
+
+-- è
+SELECT a.ACQ_TERMINAL_LIST_ID, c.loc_id 
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_loc_nk66 b ON a.ACQ_TERMINAL_LIST_ID = b.NK66_TERM_TERM_LIST_ID  
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_loc c ON c.loc_id = b.tgt_id AND  c.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND c.deleted_flag = 'N' 
+INNER JOIN  ft21_1_057_db_stg.ti_point_loc d ON d.point_Loc_Id = c.loc_id AND d.point_Loc_Type_Cd = 'IP' AND  d.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND d.deleted_flag = 'N' 
+WHERE a.NET_ADDRESS IS NOT NULL  AND c.loc_id IS NULL 
+
+--GS
+--  SK (NK66_TERM_TERM_LIST_ID = TERMINAL.ACQ_TERMINAL_LIST_ID, NK66_CONST = 2)
+
+SELECT a.ACQ_TERMINAL_LIST_ID, c.chnl_inst_id
+FROM ft21_1_057_db_stg.B0571131410007_ACQ_TER_DETAIL  a 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04 b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_loc c ON c.chnl_inst_id = b.tgt_id  AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+AND c.deleted_flag = 'N' 
+WHERE  (a. LATITUDE IS NOT NULL OR a. LONGITUDE IS NOT NULL) AND c.chnl_inst_id IS NULL 
+
+--è
+SELECT a.ACQ_TERMINAL_LIST_ID, c.loc_id 
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_loc_nk66 b ON a.ACQ_TERMINAL_LIST_ID = b.NK66_TERM_TERM_LIST_ID  
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_loc c ON c.loc_id = b.tgt_id AND  c.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND c.deleted_flag = 'N' 
+INNER JOIN  ft21_1_057_db_stg.ti_point_loc d ON d.point_Loc_Id = c.loc_id AND d.point_Loc_Type_Cd = 'GS' AND d.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND d.deleted_flag = 'N' 
+WHERE   (a. LATITUDE IS NOT NULL OR a. LONGITUDE IS NOT NULL) AND c.loc_id IS NULL 
+
+
+-- ADDRESS_CYR 
+--  SK (NK66_TERM_TERM_LIST_ID = TERMINAL.ACQ_TERMINAL_LIST_ID, NK66_CONST = 3)
+
+SELECT a.ACQ_TERMINAL_LIST_ID, c.chnl_inst_id
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_stg.B0571131410003_ACQ_OWNER d ON a.ACQ_OWNER_LIST_ID = d.ACQ_OWNER_LIST_ID 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04 b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+AND deleted_flag = 'N'
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_loc c ON c.chnl_inst_id = b.tgt_id 
+WHERE (d.ADDRESS_CYR IS NOT NULL OR d.ACQ_TOWN_ID IS NOT NULL)  AND c.chnl_inst_id IS NULL 
+
+--è
+SELECT a.ACQ_TERMINAL_LIST_ID, c.loc_id 
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_loc_nk66 b ON a.ACQ_TERMINAL_LIST_ID = b.NK66_TERM_TERM_LIST_ID  AND a.NET_ADDRESS IS NOT NULL
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_loc c ON c.loc_id = b.tgt_id AND  c.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND c.deleted_flag = 'N'
+INNER JOIN  ft21_1_057_db_stg.ti_point_loc d ON d.point_Loc_Id = c.loc_id AND d.point_Loc_Type_Cd = 'ADR' AND d.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND d.deleted_flag = 'N'
+WHERE (d.ADDRESS_CYR IS NOT NULL OR d.ACQ_TOWN_ID IS NOT NULL) AND c.loc_id IS NULL 

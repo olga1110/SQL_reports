@@ -1,0 +1,65 @@
+
+-- Проверка соответствия наименований подразделений банка (ВСП)
+SELECT
+a.ACQ_OWNER_LIST_ID,
+c.org_pty_id,
+c.org_name, 
+a.FILIAL
+FROM ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a
+LEFT JOIN ft21_1_057_db_tmd.k_pty_nk82  b ON CAST(a.CB_CODE||'/'||a.FILIAL AS VARCHAR (30))= b.NK82_OWN_CODE 
+LEFT JOIN ft21_1_057_db_stg.ti_org_name_hist c ON c.org_pty_id = b.tgt_id
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') 
+AND deleted_flag = 'N' AND  c.name_type_id = 1 AND c.org_name <> a.FILIAL
+
+
+
+-- Проверка соответствия наименований подразделений банка (ОСБ)
+SELECT
+a.CB_CODE,
+c.org_pty_id,
+c.org_name,
+a.NAME_CYR
+FROM ft21_1_057_db_stg.B0571131410006_ACQ_WAY4_FI a
+LEFT JOIN ft21_1_057_db_tmd.K_PTY_NK77 b ON a.CB_CODE = b.NK77_WAY4_CODE
+LEFT JOIN ft21_1_057_db_stg.ti_org_name_hist c ON c.org_pty_id = b.tgt_id
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' AND a.NAME_CYR IS NOT NULL 
+AND c.name_type_id = 1 
+AND c.org_name <> a.NAME_CYR
+
+-- Проверка соответствия наименований торговых организаций
+SELECT
+a.ACQ_OWNER_LIST_ID,
+c.org_pty_id,
+c.org_name,
+a.ORGANIZATION_CYR
+FROM  ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a 
+LEFT JOIN ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL f
+ON a.ACQ_OWNER_LIST_ID =  f.ACQ_OWNER_LIST_ID
+LEFT JOIN ft21_1_057_db_tmd.K_PTY_NK83 b 
+ON f.ACQ_MERCHANT_LIST_ID= b.NK83_TERM_MERCH_LIST_ID
+LEFT JOIN ft21_1_057_db_stg.ti_org_name_hist c ON c.org_pty_id = b.tgt_id
+INNER JOIN ft21_1_057_db_stg.ti_org_lvl d ON d.org_pty_id = c.org_pty_id 
+WHERE  c.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND c.deleted_flag = 'N' AND a.ORGANIZATION_CYR IS NOT NULL 
+AND d.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND d.deleted_flag = 'N'
+AND d.org_lvl_id = - 1001 AND d.pty_struct_type_id = - 1006
+AND c.name_type_id = 1 
+AND c.org_name <> a.ORGANIZATION_CYR
+
+
+-- Проверка соответствия наименований торговых точек
+SELECT
+a.ACQ_OWNER_LIST_ID,
+c.org_pty_id,
+c.org_name,
+a.NAME_CYR
+FROM  ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a 
+LEFT JOIN ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL f
+ON a.ACQ_OWNER_LIST_ID =  f.ACQ_OWNER_LIST_ID
+LEFT JOIN ft21_1_057_db_tmd.K_PTY_nk83 b ON f.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID
+LEFT JOIN ft21_1_057_db_stg.ti_org_name_hist c ON c.org_pty_id = b.tgt_id
+INNER JOIN ft21_1_057_db_stg.ti_org_lvl d ON d.org_pty_id = c.org_pty_id 
+WHERE   c.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND c.deleted_flag = 'N' AND a.ORGANIZATION_CYR IS NOT NULL 
+AND d.info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND d.deleted_flag = 'N'
+AND d.org_lvl_id = - 1002 AND d.pty_struct_type_id = - 1006
+AND c.name_type_id = 1 
+AND c.org_name <> a.NAME_CYR

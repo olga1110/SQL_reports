@@ -1,0 +1,182 @@
+ -- -1001 ^ Типы обслуживаемых карт 
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif  
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_chnl_class_val 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') 
+	AND deleted_flag = 'N'
+	AND chnl_clsfctn_id = - 1001) AS z1,
+
+(SELECT COUNT (DISTINCT a.CARD_TYPES) AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+	WHERE a.CARD_TYPES IS NOT NULL ) AS z2 
+
+--и    
+		
+SELECT a.ACQ_TERMINAL_LIST_ID, c.chnl_class_val_id FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_class_val_nk05  b ON a.CARD_TYPES = b.NK05_TERM_CARD_TYPES
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_class_val  c ON c.chnl_class_val_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE a.CARD_TYPES IN ('Магн.+ЧИП', 'Магн.+Чип', 'Магн.', 'ЧИП') 
+AND c.chnl_class_val_id IS NULL 
+	
+
+--1004^ Тип доступа к УС (Общедоступный, С ограниченным доступом)
+SELECT Count_text, Count_text_1, Count_text - Count_text_1 AS dif   -- -1004 ^ Типы доступа к УС 
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_chnl_class_val 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N')
+	AND deleted_flag = 'N'
+	AND chnl_clsfctn_id = - 1004 
+		) AS z1	,
+
+	(SELECT COUNT (*) AS Count_text_1
+	FROM ft21_1_057_db_stg. B0571131410009_ACQ_TM_ACS_TP a 
+	 ) AS z2 
+
+--и    
+		
+SELECT a.ID, c.chnl_class_val_id, c.chnl_class_val_desc, a.NAME FROM ft21_1_057_db_stg.B0571131410009_ACQ_TM_ACS_TP  a  
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_class_val_nk04  b ON a.ID = b.NK04_TERM_ACC_TYPE_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_class_val  c ON c.chnl_class_val_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE c.chnl_class_val_desc NOT IN (SELECT DISTINCT a.NAME FROM ft21_1_057_db_stg.B0571131410009_ACQ_TM_ACS_TP a WHERE a.NAME IS NOT NULL) 
+OR c.chnl_class_val_id IS NULL  
+	
+--и  
+ --1005^ Собственник УС(Сбербанк, сторонняя организация) 
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif   -- -1005 ^ Собственник УС(Сбербанк, сторонняя организация)
+
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_chnl_class_val 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N')
+	AND deleted_flag = 'N'
+	AND chnl_clsfctn_id = - 1005
+		) AS z1	,
+
+	(SELECT COUNT (*) AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410011_ACQ_TM_PTY_TP a 
+	) AS z2 
+
+--и    
+		
+SELECT a.ID, a. DESCRIPTION, c.chnl_class_val_id, c.chnl_class_val_desc  FROM ft21_1_057_db_stg.B0571131410011_ACQ_TM_PTY_TP a  
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_class_val_nk01 b ON a.ID = b.NK01_TERM_PROP_TYPE_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_class_val  c ON c.chnl_class_val_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE c.chnl_class_val_desc NOT IN (SELECT DISTINCT a.DESCRIPTION FROM ft21_1_057_db_stg.B0571131410011_ACQ_TM_PTY_TP a WHERE a.DESCRIPTION IS NOT NULL) 
+AND c.chnl_class_val_id IS NULL  
+
+--и 
+--1007^ Категория места установки (Свободный доступ, VIP место, Зарплатный) 
+
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif  -- -1007^ Категория места установки 
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_chnl_class_val 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N')
+	AND deleted_flag = 'N'
+	AND chnl_clsfctn_id = - 1007
+		) AS z1	,
+
+	(SELECT COUNT (*) AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410012_ACQ_IT_PC_CAT a 
+	 ) AS z2 
+	 
+
+
+--и    
+		
+SELECT a.ID, c.chnl_class_val_id, c.chnl_class_val_desc, a.NAME FROM ft21_1_057_db_stg.B0571131410012_ACQ_IT_PC_CAT a   
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_class_val_nk02  b ON a.ID = b.NK02_INST_PL_CAT_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_class_val  c ON c.chnl_class_val_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE c.chnl_class_val_desc NOT IN (SELECT DISTINCT a.NAME FROM ft21_1_057_db_stg.B0571131410012_ACQ_IT_PC_CAT a WHERE a.NAME IS NOT NULL) 
+OR c.chnl_class_val_id IS NULL  	
+
+
+--и   
+ --1008^ Категория вида размещения УС (Сбербанк, Предприятие)
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif   -- -1008^ Категория вида размещения УС (Сбербанк, Предприятие) 
+
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_chnl_class_val 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N')
+	AND deleted_flag = 'N'
+	AND chnl_clsfctn_id = - 1008
+		) AS z1	,
+
+(SELECT COUNT (DISTINCT a.INST_PLACE) AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+	WHERE a.INST_PLACE IS NOT NULL ) AS z2 
+
+--и    
+		
+SELECT a.ACQ_TERMINAL_LIST_ID, c.chnl_class_val_id,  a.INST_PLACE, c.chnl_class_val_desc 
+ FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a  
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_class_val_nk06  b ON a.INST_PLACE = b.NK06_TERM_INST_PLACE 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_class_val  c ON c.chnl_class_val_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE c.chnl_class_val_desc NOT IN (SELECT DISTINCT a.INST_PLACE FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a WHERE a.INST_PLACE IS NOT NULL) 
+OR c.chnl_class_val_id IS NULL  	
+
+
+
+
+--и    -1009^ Категория способа установки УС (Офисный, Через стену)
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif   ---1009^ Категория способа установки УС (Офисный, Через стену) 
+
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_chnl_class_val 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N')
+	AND deleted_flag = 'N'
+	AND chnl_clsfctn_id = - 1009
+		) AS z1,
+
+	(SELECT COUNT (*) AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410013_ACQ_INST_TYPE a 
+	) AS z2 
+
+--и    
+		
+SELECT a.ID, c.chnl_class_val_id, c.chnl_class_val_desc, a.NAME FROM ft21_1_057_db_stg.B0571131410013_ACQ_INST_TYPE a 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_class_val_nk03 b ON a.ID = b.NK03_INST_TYPE_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_class_val  c ON c.chnl_class_val_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE c.chnl_class_val_desc NOT IN (SELECT DISTINCT a.NAME FROM ft21_1_057_db_stg.B0571131410013_ACQ_INST_TYPE  a WHERE a.NAME IS NOT NULL) 
+OR c.chnl_class_val_id IS NULL  	 
+
+--и    -1012^ Тип режим работы УС(«круглосуточно», «в режиме работы места уст.»)
+SELECT z1.Count_text, z2.Count_text_1, z1.Count_text - z2.Count_text_1 AS dif   -- -1012^ Тип режим работы УС(«круглосуточно», «в режиме работы места уст.»)
+
+FROM 
+	(
+	SELECT COUNT (*) AS Count_text
+	FROM ft21_1_057_db_stg.ti_chnl_class_val 
+	WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N')
+	AND deleted_flag = 'N'
+	AND chnl_clsfctn_id = - 1012
+		) AS z1,
+
+(SELECT COUNT (DISTINCT a.WORK_TIME) AS Count_text_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+	WHERE a.WORK_TIME  IS NOT NULL ) AS z2 
+
+--и    
+		
+SELECT a.ACQ_TERMINAL_LIST_ID, c.chnl_class_val_id,  a.WORK_TIME, c.chnl_class_val_desc FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a  
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_class_val_nk07  b ON a.WORK_TIME = b.NK07_TERM_WORK_TIME 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_class_val  c ON c.chnl_class_val_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE c.chnl_class_val_desc NOT IN (SELECT DISTINCT a.WORK_TIME FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a WHERE a.WORK_TIME IS NOT NULL) 
+OR c.chnl_class_val_id IS NULL  	

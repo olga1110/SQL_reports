@@ -1,0 +1,46 @@
+
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_chnl_inst_oper_hours t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL t 
+	INNER JOIN ft21_1_057_db_stg.B0571131410002_ACQ_WORK_TIME t1 ON t.ACQ_OWNER_LIST_ID = t1.ACQ_OWNER_LIST_ID 
+	WHERE  (t1.BEGINB IS NOT NULL OR t1.ENDB IS NOT NULL) 
+    ) AS z2 
+    
+         
+--è  -- 
+
+SELECT  a.ACQ_TERMINAL_LIST_ID, c.chnl_inst_hours_open_tm, c.chnl_inst_hours_close_tm, c.chnl_inst_id   
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a
+INNER JOIN ft21_1_057_db_stg.B0571131410002_ACQ_WORK_TIME t1 ON a.ACQ_OWNER_LIST_ID = t1.ACQ_OWNER_LIST_ID AND (t1.BEGINB IS NOT NULL OR t1.ENDB IS NOT NULL) 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04  b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_chnl_inst_oper_hours c ON c.chnl_inst_id = b.tgt_id 
+WHERE info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+ AND c.chnl_inst_hours_open_tm  --AND c.chnl_inst_hours_close_tm <> t1.ENDB OR c.chnl_inst_id IS NULL  
+ 
+ <>
+    CASE CHARACTER_LENGTH (CAST( t1.BEGINB AS VARCHAR(4))) 
+WHEN 3 THEN CAST('0'||SUBSTR(CAST( t1.BEGINB AS VARCHAR(4)),1,1)||':'||SUBSTR(CAST( t1.BEGINB AS VARCHAR(4)),2,2)
+||':00'             AS TIME)                                                              
+WHEN 4 THEN CAST(SUBSTR(CAST( t1.BEGINB AS VARCHAR(4)),1,2)||':'||SUBSTR(CAST( t1.BEGINB AS VARCHAR(4)),3,2)
+||':00'             AS TIME) END AND c.chnl_inst_hours_close_tm <> 
+
+                                                                                            
+ CASE CHARACTER_LENGTH (CAST( t1.ENDB AS VARCHAR(4)))
+WHEN 3 THEN CAST('0'||SUBSTR(CAST( t1.ENDB AS VARCHAR(4)),1,1)||':'||SUBSTR(CAST( t1.ENDB AS VARCHAR(4)),2,2)
+||':00'             AS TIME)                                                              
+WHEN 4 THEN CAST(SUBSTR(CAST( t1.ENDB AS VARCHAR(4)),1,2)||':'||SUBSTR(CAST( t1.ENDB AS VARCHAR(4)),3,2)
+||':00'             AS TIME) END 
+        
+ 
+            
+            
+            
+          

@@ -1,0 +1,27 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_point_loc t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.point_Loc_Type_Cd= 'IP' 
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.ti_ip_address  t 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+AND deleted_flag = 'N'
+
+ ) AS z2 
+  
+------------------------------------------------è-----------------------------------------------------------------------------------
+
+SELECT a.ACQ_TERMINAL_LIST_ID, c.IP_Address_Id 
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_terminal a 
+LEFT JOIN ft21_1_057_db_tmd.K_loc_nk66 b ON a.ACQ_terminal_LIST_ID = b.NK66_TERM_TERM_LIST_ID AND  NK66_CONST = 1
+LEFT JOIN ft21_1_057_db_stg.ti_ip_address  c ON c.IP_Address_Id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE  (a.NET_ADDRESS IS NOT NULL  AND c.IP_Address_Id IS NULL ) OR (COALESCE(c.IP_Address_Num, NULL,-1) <> COALESCE(a.NET_ADDRESS, NULL,-1) ) 
+
+

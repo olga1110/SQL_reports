@@ -1,0 +1,28 @@
+SELECT Count_Detail, Count_Detail_1,  Count_Detail - Count_Detail_1 AS dif     
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_atm_chnl_crncy t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1,
+	(
+	SELECT COUNT (*)  AS Count_Detail_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+WHERE a.CURRENCY IS NOT NULL 
+ ) AS z2
+
+--
+--------привязка к терминалу------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SELECT  a.ACQ_TERMINAL_LIST_ID, c.atm_chnl_inst_id, c.atm_chnl_crncy_id FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04  b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_atm_chnl_crncy  c ON c.atm_chnl_inst_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE a. CURRENCY is not null AND c.atm_chnl_inst_id IS NULL 
+
+--------привязка к валюте -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SELECT  a.ACQ_TERMINAL_LIST_ID, c.atm_chnl_inst_id, c.atm_chnl_crncy_id FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_tmd.k_crncy_nk10   b ON a.CURRENCY = b.NK10_TERM_CURR
+LEFT JOIN ft21_1_057_db_stg.ti_atm_chnl_crncy  c ON c.atm_chnl_inst_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE a. CURRENCY is not null AND c.atm_chnl_crncy_id IS NULL 

@@ -1,0 +1,415 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_chnl_inst_stts_hist t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT chnl_inst_id, chnl_inst_stts_start_dt, chnl_inst_stts_role_id, chnl_inst_stts_type_id, chnl_inst_stts_end_dt, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_chnl_inst_stts_hist t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_chnl_inst_stts_type t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT chnl_inst_stts_role_id, chnl_inst_stts_type_id, chnl_inst_stts_type_desc, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_chnl_inst_stts_type t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+  SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_manuf_mdl t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT mdl_id, mdl_desc, manuf_mdl_num, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_manuf_mdl t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_atm_chnl_inst t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT atm_chnl_inst_id, atm_id, atm_serial_num, atm_guid_cd, mdl_id, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_atm_chnl_inst t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_chnl_class_val t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT chnl_class_val_id, chnl_clsfctn_id, chnl_class_val_desc, chnl_class_val_start_dt, chnl_class_val_end_dt, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_chnl_class_val t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT chnl_inst_id, chnl_clsfctn_id, chnl_class_start_dt, chnl_class_val_id, chnl_class_end_dt, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_chnl_chnl_class_assoc t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_crncy  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT crncy_id, crncy_cd, crncy_name, iso_crncy_cd, crncy_round_dec_cnt, exch_rate_unit_cnt, clearing_crncy_ind, crncy_conv_type_cd, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_crncy t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_atm_chnl_crncy t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT atm_chnl_inst_id, atm_chnl_crncy_use_id, atm_chnl_crncy_id, atm_chnl_crncy_start_dt, atm_chnl_crncy_end_dt, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_atm_chnl_crncy t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+  SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_pty t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT pty_id, pty_src_id, src_pty_cd, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id, org_ind, ind_ind, pty_type_cd
+		FROM ft21_1_057_db_stg.ti_pty t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+   SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_org t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT org_pty_id, org_type_cd, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.ti_org t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+    SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.TI_ORG_NAME_HIST t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT org_pty_id, name_type_id, org_name_start_dt, org_name, org_name_end_dt, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id, ORG_SHORT_NAME
+		FROM ft21_1_057_db_stg.TI_ORG_NAME_HIST t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+     SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.TI_INT_ORG t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT int_org_pty_id, int_org_type_id, int_org_categ_cd, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.TI_INT_ORG t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.TI_FIN_INST_INT_ORG t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT int_org_pty_id, org_num, hr_internal_org_ind, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id, hr_int_org_ind
+		FROM ft21_1_057_db_stg.TI_FIN_INST_INT_ORG t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+  SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.TI_EXT_ORG t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT ext_org_pty_id, ext_org_type_id, deleted_flag, workflow_run_id, action_cd, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.TI_EXT_ORG t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. TI_ORG_LVL t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT org_pty_id, pty_struct_type_id, org_lvl_id, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg.TI_ORG_LVL t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+  SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. TI_PTY_RELATED t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT relates_pty_id, pty_rel_role_id, related_pty_id, pty_rel_start_dt, pty_rel_end_dt, pty_struct_type_id, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id, pty_rel_stts_reason_id
+		FROM ft21_1_057_db_stg.TI_PTY_RELATED t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+   SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. ti_pty_idfn t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT pty_id, pty_idfn_type_id, pty_idfn_start_dt, pty_idfn_end_dt, pty_idfn_val, pty_id_categ_id, pty_id_receipt_dt, issuing_pty_name, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id, pty_idfn_activity_type_id, PTY_IDFN_EXPIRED_DT, issuing_org_num
+		FROM ft21_1_057_db_stg.ti_pty_idfn t 
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+  SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. ti_pty_chnl_inst t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT pty_id, chnl_inst_id, pty_chnl_inst_role_id, pty_chnl_inst_start_dt, pty_chnl_inst_end_dt, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg. ti_pty_chnl_inst t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.TI_LOC  t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT loc_id, loc_type_cd, deleted_flag, action_cd, workflow_run_id, input_file_id, session_inst_id, info_system_id
+		FROM ft21_1_057_db_stg. TI_LOC t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+  SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.TI_POINT_LOC t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT point_loc_id, point_loc_type_cd, deleted_flag, action_cd, session_inst_id, input_file_id, workflow_run_id, info_system_id
+		FROM ft21_1_057_db_stg. TI_POINT_LOC t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+   SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. ti_geospatial_loc t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT geospatial_loc_id, latitude_meas, longitude_meas, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg. ti_geospatial_loc t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+    SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_street_addr  t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT STREET_ADDR_ID, ADDR_LINE_1_TXT, ADDR_LINE_2_TXT, CITY_ID, TERRITORY_ID, CENSUS_BLOCK_ID, CNTRY_ID, KLADR_ADDR_NUM, DELETED_FLAG, ACTION_CD, INPUT_FILE_ID, SESSION_INST_ID, WORKFLOW_RUN_ID, INFO_SYSTEM_ID, src_addr_line_txt, postal_cd_num, cnty_id, city_2_id
+		FROM ft21_1_057_db_stg. ti_street_addr t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+ SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. ti_ip_address t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT ip_address_id, ip_address_num, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg. ti_ip_address t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+  SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. ti_chnl_inst_loc t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT chnl_inst_id, loc_id, chnl_inst_loc_usage_id, chnl_inst_loc_start_dt, chnl_inst_loc_end_dt, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg. ti_chnl_inst_loc t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+   SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. ti_pty_loc t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT pty_id, pty_loc_id, pty_loc_usage_id, pty_loc_start_dt, pty_loc_end_dt, INFO_SYSTEM_ID, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id
+		FROM ft21_1_057_db_stg. ti_pty_loc t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL
+ 
+    SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg. ti_chnl_inst_oper_hours t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+		(SELECT COUNT (*) AS Count_Detail_1
+		FROM
+		(SELECT DISTINCT chnl_inst_id, days_type_id, chnl_inst_hours_start_dt, chnl_inst_hours_end_dt, chnl_inst_hours_open_tm, chnl_inst_hours_close_tm, deleted_flag, action_cd, workflow_run_id, session_inst_id, input_file_id, info_system_id
+		FROM ft21_1_057_db_stg. ti_chnl_inst_oper_hours t
+ ) AS z2 ) AS z3
+ 
+ UNION ALL

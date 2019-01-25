@@ -1,0 +1,37 @@
+SELECT Count_Detail, Count_Detail_1,  Count_Detail - Count_Detail_1 AS dif     
+FROM 
+            (
+            SELECT COUNT (*) AS Count_Detail
+            FROM ft21_1_057_db_STG.ti_pty_loc t 
+            WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+            AND deleted_flag = 'N'      
+                        ) AS z1, 
+            (
+            SELECT COUNT (DISTINCT ACQ_TERMINAL_LIST_ID)  AS Count_Detail_1
+            FROM ft21_1_057_db_STG.B0571131410001_ACQ_TERMINAL a 
+            INNER JOIN ft21_1_057_db_STG.B0571131410003_ACQ_OWNER t ON t.ACQ_OWNER_LIST_ID = a.ACQ_OWNER_LIST_ID 
+            WHERE  a.TERMINAL_TYPE = 'POS SALE'  AND (t.ADDRESS_CYR IS NOT NULL OR  t.ACQ_TOWN_ID IS NOT NULL)
+            ) AS z2 
+ 
+ --SK (NK83_TERM_MERCH_LIST_ID = TERMINAL.ACQ_MERCHANT_LIST_ID) 
+-- pty_id
+SELECT  a.ACQ_TERMINAL_LIST_ID, c.pty_idFROM FT21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a   
+INNER JOIN FT21_1_057_db_stg.B0571131410003_ACQ_OWNER t ON (t.ACQ_OWNER_LIST_ID = a.ACQ_OWNER_LIST_ID AND a.TERMINAL_TYPE = 'POS SALE' 
+ AND (t.ADDRESS_CYR IS NOT NULL OR t.ACQ_TOWN_ID IS NOT NULL))
+LEFT JOIN FT21_1_057_db_tmd.k_pty_nk83  b ON a.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+LEFT JOIN FT21_1_057_db_stg.ti_pty_loc c ON c.pty_id = b.tgt_id 
+WHERE info_system_id IN (SELECT info_system_id FROM FT21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+AND c.pty_id IS NULL 
+-- è
+
+-- SK (NK66_TERM_TERM_LIST_ID = TERMINAL.ACQ_TERMINAL_LIST_ID, NK66_CONST = 3)
+
+SELECT  a.ACQ_TERMINAL_LIST_ID,  c.pty_loc_id  FROM FT21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a  
+INNER JOIN FT21_1_057_db_stg.B0571131410003_ACQ_OWNER t ON (t.ACQ_OWNER_LIST_ID = a.ACQ_OWNER_LIST_ID AND a.TERMINAL_TYPE = 'POS SALE' 
+ AND (t.ADDRESS_CYR IS NOT NULL OR t.ACQ_TOWN_ID IS NOT NULL))
+LEFT JOIN FT21_1_057_db_tmd.k_loc_nk66  b ON a.ACQ_TERMINAL_LIST_ID = b.NK66_TERM_TERM_LIST_ID AND NK66_CONST = 3
+LEFT JOIN FT21_1_057_db_stg.ti_pty_loc c ON c.pty_id = b.tgt_id AND  c.info_system_id IN (SELECT info_system_id FROM FT21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND c.deleted_flag = 'N' 
+INNER JOIN FT21_1_057_db_stg.ti_point_loc d ON c.pty_loc_id = d.point_Loc_Id AND d.point_Loc_Type_Cd = 'ADR' 
+WHERE d.info_system_id IN (SELECT info_system_id FROM FT21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND d.deleted_flag = 'N' 
+AND c.pty_loc_id IS NULL 
+

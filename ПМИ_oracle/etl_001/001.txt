@@ -1,0 +1,25 @@
+-- Выдает файлы, для которых НЕ совпадает количество строк
+-- Если ничего не выдает, то всё совпадает
+LOCK ROW ACCESS
+SELECT
+input_file_name fn, count_value cnt
+FROM ft21_1_057_db_stg.B0571131419997
+WHERE stat_type_cd='CTL_FILE'
+AND (input_file_name fn, count_value cnt) NOT IN
+(SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410002_ACQ_WORK_TIME GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410003_ACQ_OWNER GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410004_ACQ_TER_MODEL GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410005_ACQ_ORG_STATE GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410006_ACQ_WAY4_FI GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410007_ACQ_TER_DETAIL GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410008_ACQ_TOWN GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410009_ACQ_TM_ACS_TP GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410010_ACQ_TOWN_TYPE GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410011_ACQ_TM_PTY_TP GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410012_ACQ_IT_PC_CAT GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410013_ACQ_INST_TYPE GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410014_ACQ_MER_LIST GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410015_ACQ_TER_LIST GROUP BY input_file_name UNION ALL
+SELECT input_file_name,COUNT(1) cnt FROM ft21_1_057_db_stg.B0571131410016_ACQ_OWN_LIST  GROUP BY input_file_name
+)

@@ -1,0 +1,44 @@
+ -- RULE_CD: MERCH_HIST009
+-- RULE_NAME: Проверка корректности историчности в t_chnl_inst_stts_hist 
+-- DEVIATION_SQL:  
+SELECT * 
+FROM	 
+(   
+      SELECT
+            t.*
+            ,MAX(chnl_inst_stts_end_dt) OVER (PARTITION BY chnl_inst_id
+            ORDER      BY chnl_inst_stts_start_dt, chnl_inst_stts_end_dt, workflow_run_id 
+            ROWS BETWEEN 1 PRECEDING 
+	AND	     1 PRECEDING) AS lag_end_dt    
+            ,MAX(chnl_inst_stts_start_dt) OVER (PARTITION BY chnl_inst_id
+            ORDER BY chnl_inst_stts_start_dt, chnl_inst_stts_end_dt, workflow_run_id 
+            ROWS BETWEEN 1 FOLLOWING 
+	AND	1 FOLLOWING) AS lead_start_dt   
+      FROM
+            ft21_1_057_db_stg.ti_chnl_inst_stts_hist t   
+            
+      WHERE deleted_flag = 'N' 
+	AND	
+      info_system_id IN (              
+            SELECT      info_system_id     
+            FROM  ft21_1_057_db_stg.ti_info_system s    
+            WHERE  s.info_system_type_cd = '057'   
+      )) _t 
+WHERE	   
+      (chnl_inst_stts_start_dt - INTERVAL '1' DAY <> COALESCE(lag_end_dt,
+		DATE '1900-01-01' - INTERVAL '1' DAY) 
+	AND	lag_end_dt IS NOT NULL)   
+      OR    (chnl_inst_stts_end_dt <> COALESCE(lead_start_dt - INTERVAL '1' DAY,
+		DATE '9999-12-31') 
+	AND	lead_start_dt IS NOT NULL) 
+      ORDER BY 3
+
+
+
+
+
+
+
+
+
+

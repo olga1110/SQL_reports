@@ -1,0 +1,33 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif   
+FROM
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_point_loc t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.point_Loc_Type_Cd= 'GS' 
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.ti_geospatial_loc  t 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+AND deleted_flag = 'N'
+
+ ) AS z2   
+
+-----------------------------è--------------------------------------------------------
+SELECT a.ACQ_TERMINAL_LIST_ID, c.geospatial_loc_id 
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_terminal a 
+INNER JOIN  ft21_1_057_db_stg.B0571131410007_ACQ_TER_DETAIL d ON a.ACQ_TERMINAL_LIST_ID = d.ACQ_TERMINAL_LIST_ID
+LEFT JOIN ft21_1_057_db_tmd.k_loc_nk66  b ON a.ACQ_terminal_LIST_ID = b.NK66_TERM_TERM_LIST_ID AND NK66_CONST = 2
+LEFT JOIN ft21_1_057_db_stg.ti_geospatial_loc  c ON c.geospatial_loc_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE   (d.LATITUDE IS NOT NULL OR  d.LONGITUDE IS NOT NULL AND c.geospatial_loc_id  IS NULL) OR (COALESCE(c.latitude_meas, NULL,-1) <> COALESCE(d.LATITUDE, NULL,-1) OR COALESCE(c.longitude_meas, NULL,-1) <> COALESCE(d.LONGITUDE, NULL,-1) ) 
+
+
+
+
+ 
+
+
+

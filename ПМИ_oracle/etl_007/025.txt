@@ -1,0 +1,41 @@
+
+SELECT a.ACQ_MERCHANT_LIST_ID, c.pty_id FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_stg.B0571131410003_ACQ_OWNER D ON A.ACQ_OWNER_LIST_ID = D.ACQ_OWNER_LIST_ID
+LEFT JOIN ft21_1_057_db_tmd.K_PTY_nk83 b ON a.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_PTY_IDFN c ON c.pty_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE a.TERMINAL_TYPE = 'POS SALE' AND (D.INN is not null OR a.AMEX_MERCHANT_ID is not nulll)
+AND c.pty_id IS NULL 
+
+
+----------------------------------------------- ИНН---------------------------------------------------------------------------------------------------------------
+
+SELECT a.ACQ_MERCHANT_LIST_ID, c.pty_id,
+c.pty_idfn_val,
+d.INN
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_stg.B0571131410003_ACQ_OWNER d ON d.ACQ_OWNER_LIST_ID = a.ACQ_OWNER_LIST_ID
+INNER JOIN ft21_1_057_db_tmd.K_PTY_nk83 b ON a.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+INNER JOIN ft21_1_057_db_stg.ti_PTY_IDFN c ON c.pty_id = b.tgt_id 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+AND a.TERMINAL_TYPE = 'POS SALE' AND D.INN is not null
+AND pty_idfn_type_id = -1004 
+AND COALESCE(c.pty_idfn_val, NULL,-1) <> COALESCE(d.INN, NULL,-1) 
+
+-- --------------------------------------Номер мерчанта, присвоенный American Express----------------------------------------------------------  
+
+SELECT DISTINCT a.ACQ_MERCHANT_LIST_ID, c.pty_id,
+c.pty_idfn_val,
+a.AMEX_MERCHANT_ID 
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_tmd.K_PTY_nk83 b ON a.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+INNER JOIN ft21_1_057_db_stg.ti_PTY_IDFN c ON c.pty_id = b.tgt_id 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+AND a.TERMINAL_TYPE = 'POS SALE'   
+AND pty_idfn_type_id = -1016
+AND a.AMEX_MERCHANT_ID IS NOT NULL
+AND COALESCE(c.pty_idfn_val, NULL,-1) <> COALESCE(a.AMEX_MERCHANT_ID, NULL,-1) OR c.pty_id IS NULL
+
+
+
+

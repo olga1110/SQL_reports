@@ -1,0 +1,31 @@
+-- проверка равенства количества ВСП
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_int_org t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.int_org_type_id = 3
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.B0571131410003_ACQ_OWNER a 
+WHERE a.FILIAL IS NOT NULL 
+ ) AS z2
+
+-- проверка равенства количества ОСБ 
+
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_int_org t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.int_org_type_id = 2
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.B0571131410006_ACQ_WAY4_FI a 
+ ) AS z2

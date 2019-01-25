@@ -1,0 +1,27 @@
+SELECT t1.ACQ_MERCHANT_LIST_ID, c.related_pty_id, c.relates_pty_id
+FROM (SELECT * FROM ft21_1_057_db_stg.B0571131410003_ACQ_OWNER  t  WHERE ACQ_OWNER_LIST_ID NOT IN (SELECT ACQ_OWNER_LIST_ID_PARENT FROM ft21_1_057_db_stg.B0571131410003_ACQ_OWNER  WHERE  ACQ_OWNER_LIST_ID_PARENT IS NOT NULL)) t 
+INNER JOIN ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL t1 ON t.acq_owner_list_id = t1.acq_owner_list_id AND t1.TERMINAL_TYPE = 'POS SALE' AND t.AMND_STATE = 'A' AND t1.AMND_STATE = 'A'
+LEFT JOIN ft21_1_057_db_tmd.k_pty_nk83  b ON t1.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_PTY_RELATED c ON c.related_pty_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE c.related_pty_id IS NULL 
+
+
+
+-- è
+SELECT t1.ACQ_TERMINAL_LIST_ID,t1.ACQ_MERCHANT_LIST_ID, c.related_pty_id, c.relates_pty_id
+FROM (SELECT * FROM ft21_1_057_db_stg.B0571131410003_ACQ_OWNER   WHERE ACQ_OWNER_LIST_ID  IN (SELECT ACQ_OWNER_LIST_ID_PARENT FROM acq_owner  WHERE  ACQ_OWNER_LIST_ID_PARENT IS NOT NULL)) t 
+INNER JOIN ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL t1 ON t.acq_owner_list_id = t1.acq_owner_list_id AND t1.TERMINAL_TYPE = 'POS SALE' AND t.AMND_STATE = 'A' AND t1.AMND_STATE = 'A'
+LEFT JOIN ft21_1_057_db_tmd.k_pty_nk83  b ON t1.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_PTY_RELATED c ON c.relates_pty_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE t1.ACQ_MERCHANT_LIST_ID is not null AND c.relates_pty_id IS NULL  OR c.related_pty_id OR t.ODS$VALIDFROM BETWEEN pty_rel_start_dt AND pty_rel_end_dt
+
+
+
+
+
+
+
+
+

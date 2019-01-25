@@ -1,0 +1,211 @@
+
+  --  -1001^ Типы обслуживаемых карт 
+  
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1001
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a
+WHERE   a.CARD_TYPES  IS NOT NULL 
+ ) AS z2
+ 
+ 	-- -1002^ Признак наличия депозитного модуля
+ 	
+ 	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1002
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a
+WHERE  a.CASHIN  IS NOT NULL 
+ ) AS z2   
+	
+	
+	-- -1003^ Признак возможности совершения валютно-обменных операций  
+	
+		SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1003
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a
+WHERE   a.CURRENCY_CHANGE  IS NOT NULL 
+ ) AS z2   
+	
+	--  -1004^ Тип доступа к УС  
+	
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1004
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a
+WHERE   a.ACQ_ACCESS_TYPE_ID  IS NOT NULL 
+ ) AS z2 	
+	-------------------------------------------
+		--  -1005^ Собственник банкомата 
+	
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1005
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a
+WHERE   a.ACQ_PROPERTY_TYPE_ID  IS NOT NULL 
+ ) AS z2 	
+
+		--  -1006^ Признак перевода банкомата/ИТТ на централизованное обслуживание (для г. Москвы)  
+	
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1006
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a
+WHERE    a.SERVICE_CENTRAL  IS NOT NULL 
+ ) AS z2 	
+
+ -- -1007^Категория места установки-----------------------------------------------------------------------------------------------------------------
+ 
+ACQ_INST_PLACE_CAT_ID
+	
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1007
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a
+WHERE   a.ACQ_INST_PLACE_CAT_ID  IS NOT NULL 
+ ) AS z2 	
+	 	
+-- -  -1008^ Категория вида размещения УС  -----------------------------------------------------------------------------------------------------------------
+ 
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1008
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a
+WHERE  a.INST_PLACE  IS NOT NULL 
+ ) AS z2 	
+	 	
+	 	
+-- -    -1009^Категория способа установки УС   -----------------------------------------------------------------------------------------------------------------
+ 
+	
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1009
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a
+WHERE  a.ACQ_INST_TYPE_ID   IS NOT NULL  
+ ) AS z2 	
+	 	
+ --  -1010^Признак размещения УС в тамбуре   -----------------------------------------------------------------------------------------------------------------
+ 
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1010
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a 
+WHERE  a.TAMBUR  IS NOT NULL  
+ ) AS z2 	
+	
+--  -1011^ Признак наличия системы контроля доступа в тамбур  -----------------------------------------------------------------------------------------------------------------
+ 
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1011
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410007_ACQ_TERMINAL_DETAIL a 
+WHERE    a.ACCESS_CONTROL  IS NOT NULL  
+ ) AS z2 	 		
+	 
+--  -1012^ Тип режим работы УС  -----------------------------------------------------------------------------------------------------------------
+ 
+	SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_STG.ti_chnl_chnl_class_assoc  t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_STG.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.chnl_clsfctn_id = - 1012
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM  ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+WHERE a.WORK_TIME  IS NOT NULL  
+ ) AS z2 	 
+	 
+	 	

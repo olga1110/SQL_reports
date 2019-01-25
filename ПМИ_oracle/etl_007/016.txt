@@ -1,0 +1,32 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_atm_chnl_inst t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL t 
+	WHERE t.ACQ_TERMINAL_mdl_ID IS NOT NULL  AND  t.TERMINAL_TYPE IN ('ITT', 'ATM') 
+    ) AS z2 
+    
+    
+--и  -- 
+
+--Привязка к терминалу------------------------------------------------------------------------------------------------------------------------------
+SELECT  a.ACQ_TERMINAL_LIST_ID, c.atm_chnl_inst_id, c.mdl_Id  FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_chnl_inst_nk04  b ON a.ACQ_TERMINAL_LIST_ID = b.NK04_TERM_TERM_LIST_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_atm_chnl_inst  c ON c.atm_chnl_inst_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE c.atm_id IS NULL and  a.TERMINAL_TYPE IN ('ITT', 'ATM')  AND a.ACQ_TERMINAL_model_ID IS NOT NULL
+
+--Привязка к модели ------------------------------------------------------------------------------------------------------------------------------
+SELECT  a.ACQ_TERMINAL_LIST_ID, c.atm_chnl_inst_id, c.mdl_Id  FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+LEFT JOIN ft21_1_057_db_tmd.k_manuf_model_nk01  b ON a.ACQ_TERMINAL_MODEL_ID = b.NK01_TERM_MODEL_ID    
+LEFT JOIN ft21_1_057_db_stg.ti_atm_chnl_inst  c ON c.atm_chnl_inst_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE c.mdl_id IS NULL and a.TERMINAL_TYPE IN ('ITT', 'ATM')  AND a.ACQ_TERMINAL_model_ID IS NOT NULL
+
+

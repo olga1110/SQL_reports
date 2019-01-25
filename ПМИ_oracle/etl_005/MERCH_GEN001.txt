@@ -1,0 +1,115 @@
+ --LOCKING ROW ACCESS 
+
+-- ѕроверка наличи€ сгенерированных значений в  t_chnl_inst_stts_type, дл€ которых не пришли данные в ACQ_ORG_STATE 
+SELECT t.chnl_inst_stts_type_id, 'No value in t_chnl_inst_stts_type (for  t_chnl_inst_stts_hist)' 
+FROM (SELECT DISTINCT chnl_inst_stts_type_id, info_system_id FROM ft21_1_057_db_stg.ti_chnl_inst_stts_hist WHERE deleted_flag='N' ) t
+INNER JOIN ft21_1_057_db_stg.ti_info_system TIS
+    ON TIS.deleted_flag = 'N'
+    AND TIS.info_system_id = t.info_system_id
+    AND TIS.info_system_type_cd = '057'
+LEFT JOIN (SELECT chnl_inst_stts_type_id 
+                FROM ft21_1_057_db_stg.ti_chnl_inst_stts_type t 
+                JOIN ft21_1_057_db_stg.ti_info_system TIS
+                               ON TIS.deleted_flag = 'N'
+                               AND TIS.info_system_id = t.info_system_id
+                               AND TIS.info_system_type_cd = '057'
+     WHERE t.deleted_flag = 'N') _chnl_inst_stts_type
+  ON _chnl_inst_stts_type.chnl_inst_stts_type_id = t.chnl_inst_stts_type_id    
+WHERE _chnl_inst_stts_type.chnl_inst_stts_type_id IS NULL 
+UNION ALL
+
+-- ѕроверка наличи€ сгенерированных значений в t_manuf_model, дл€ которых не пришли данные в ACQ_TERMINAL_MODEL
+SELECT t.Mdl_Id, 'No value in t_manuf_mdl (for  t_atm_chnl_inst)' 
+FROM (SELECT DISTINCT mdl_id, info_system_id FROM ft21_1_057_db_stg.ti_atm_chnl_inst WHERE deleted_flag='N' ) t
+INNER JOIN ft21_1_057_db_stg.ti_info_system TIS
+    ON TIS.deleted_flag = 'N'
+    AND TIS.info_system_id = t.info_system_id
+    AND TIS.info_system_type_cd = '057'
+LEFT JOIN (SELECT  Mdl_Id
+                FROM ft21_1_057_db_stg.ti_manuf_mdl t
+                JOIN ft21_1_057_db_stg.ti_info_system TIS
+                               ON TIS.deleted_flag = 'N'
+                               AND TIS.info_system_id = t.info_system_id
+                               AND TIS.info_system_type_cd = '057'
+     WHERE t.deleted_flag = 'N') _manuf_model
+  ON _manuf_model.mdl_id = t.mdl_id       
+WHERE _manuf_model.mdl_id  IS NULL
+ UNION ALL
+ 
+ 
+--- ѕроверка наличи€ сгенерированных значений в t_chnl_class_val, дл€ которых не пришли данные в ACQ_TERMINAL, ACQ_TERM_ACCESS_TYPE, ACQ_TERM_PROPERTY_TYPE, ACQ_INST_PLACE_CAT,  ACQ_INST_TYPE 
+SELECT t.chnl_class_val_id, 'No value in t_chnl_class_val (for t_chnl_chnl_class_assoc)' 
+FROM (SELECT DISTINCT chnl_class_val_id, chnl_clsfctn_id,  info_system_id FROM ft21_1_057_db_stg.ti_chnl_chnl_class_assoc WHERE deleted_flag='N' ) t
+INNER JOIN ft21_1_057_db_stg.ti_info_system TIS
+    ON (TIS.deleted_flag = 'N'
+    AND TIS.info_system_id = t.info_system_id
+    AND TIS.info_system_type_cd = '057')
+LEFT JOIN (SELECT  t.chnl_class_val_id, t.chnl_clsfctn_id
+                FROM ft21_1_057_db_stg.ti_chnl_class_val t
+                JOIN ft21_1_057_db_stg.ti_info_system TIS
+                               ON (TIS.deleted_flag = 'N'
+                               AND TIS.info_system_id = t.info_system_id
+                               AND TIS.info_system_type_cd = '057'
+                               AND t.deleted_flag = 'N')   )_chnl_class_val
+  ON _chnl_class_val.chnl_class_val_id = t.chnl_class_val_id    
+WHERE  _chnl_class_val.chnl_class_val_id  IS NULL AND t.chnl_clsfctn_id NOT IN (- 1002, - 1003, -1006, -1010, -1011)
+
+UNION ALL
+
+--- ѕроверка наличи€ сгенерированных значений в t_chnl_inst дл€ которых не пришли данные в ACQ_TERMINAL, ACQ_TERM_ACCESS_TYPE, ACQ_TERM_PROPERTY_TYPE, ACQ_INST_PLACE_CAT,  ACQ_INST_TYPE 
+SELECT t1.chnl_inst_id, 'No value in t_chnl_inst (for t_chnl_chnl_class_assoc)' 
+FROM (SELECT DISTINCT chnl_inst_id, chnl_clsfctn_id,  chnl_class_val_id, info_system_id FROM ft21_1_057_db_stg.ti_chnl_chnl_class_assoc WHERE deleted_flag='N' ) t1
+INNER JOIN ft21_1_057_db_stg.ti_info_system TIS
+    ON (TIS.deleted_flag = 'N'
+    AND TIS.info_system_id = t1.info_system_id
+    AND TIS.info_system_type_cd = '057')
+LEFT JOIN (SELECT  t.chnl_inst_id
+                FROM FT21_1_057_DB_stg.ti_chnl_inst t
+                JOIN ft21_1_057_db_stg.ti_info_system TIS
+                               ON (TIS.deleted_flag = 'N'
+                               AND TIS.info_system_id = t.info_system_id
+                               AND TIS.info_system_type_cd = '057'
+                               AND t.deleted_flag = 'N')   )_chnl_inst
+  ON _chnl_inst.chnl_inst_id = t1. chnl_inst_id 
+WHERE  _chnl_inst.chnl_inst_id IS NULL 
+ 
+UNION ALL
+
+-- ѕроверка наличи€ сгенерированных значений в t_pty, дл€ которых не пришли данные в ACQ_WAY4_FI 
+SELECT t.pty_id, 'No value in t_pty (for t_pty_chnl_inst)' 
+FROM (SELECT DISTINCT pty_id, info_system_id FROM ft21_1_057_db_stg.ti_pty_chnl_inst WHERE deleted_flag='N'  AND pty_chnl_inst_role_id = - 1003) t 
+INNER JOIN ft21_1_057_db_stg.ti_info_system TIS
+    ON TIS.deleted_flag = 'N'
+    AND TIS.info_system_id = t.info_system_id
+    AND TIS.info_system_type_cd = '057'
+LEFT JOIN (SELECT  pty_id 
+                FROM ft21_1_057_db_stg.ti_pty t
+                JOIN ft21_1_057_db_stg.ti_info_system TIS
+                               ON TIS.deleted_flag = 'N'
+                               AND TIS.info_system_id = t.info_system_id
+                               AND TIS.info_system_type_cd = '057'
+     WHERE t.deleted_flag = 'N') _pty
+  ON _pty.pty_id = t.pty_id    
+WHERE _pty.pty_id IS NULL
+UNION ALL
+
+
+-- ѕроверка наличи€ сгенерированных значений в t_chnl_inst, дл€ которых не пришли данные в ACQ_TERMINAL
+SELECT t.geospatial_loc_id, 'No value in t_chnl_inst (for t_geospatial_loc)' 
+FROM (SELECT DISTINCT geospatial_loc_id, info_system_id FROM ft21_1_057_db_stg.ti_geospatial_loc  WHERE deleted_flag='N' ) t 
+INNER JOIN ft21_1_057_db_stg.ti_info_system TIS
+    ON TIS.deleted_flag = 'N'
+    AND TIS.info_system_id = t.info_system_id
+    AND TIS.info_system_type_cd = '057'
+LEFT JOIN (SELECT chnl_inst_id 
+                FROM ft21_1_057_db_stg.ti_chnl_inst t
+                JOIN ft21_1_057_db_stg.ti_info_system TIS
+                               ON TIS.deleted_flag = 'N'
+                               AND TIS.info_system_id = t.info_system_id
+                               AND TIS.info_system_type_cd = '057'
+     WHERE t.deleted_flag = 'N') _chnl
+  ON _chnl.chnl_inst_id = t.geospatial_loc_id    
+WHERE _chnl.chnl_inst_id IS NULL
+
+
+

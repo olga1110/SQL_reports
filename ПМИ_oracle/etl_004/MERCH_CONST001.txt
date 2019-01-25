@@ -1,0 +1,100 @@
+ 
+   LOCKING ROW ACCESS 
+   SELECT * FROM 
+   (
+      -- Правильность заполнения chnl_inst_stts_role_id в таблице t_chnl_inst_stts_hist
+     SELECT  't_chnl_inst_stts_hist.chnl_inst_stts_role_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_chnl_inst_stts_hist t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.chnl_inst_stts_role_id, -1) <>  -1001 UNION ALL
+-- Правильность заполнения chnl_inst_stts_role_id в таблице t_chnl_inst_stts_type
+     SELECT  't_chnl_inst_stts_type.chnl_inst_stts_role_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_chnl_inst_stts_type t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.chnl_inst_stts_role_id, -1) <>  -1001 UNION ALL     
+-- Правильность заполнения atm_chnl_crncy_use_id в таблице t_atm_chnl_crncy
+     SELECT  't_atm_chnl_crncy.atm_chnl_crncy_use_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_atm_chnl_crncy t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.atm_chnl_crncy_use_id, -1) <>  -1001 UNION ALL     
+-- Правильность заполнения pty_type_cd в таблице t_pty 
+     SELECT  't_pty.pty_type_cd' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_pty t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.pty_type_cd, -1) <>'ORG'  UNION ALL     
+-- Правильность заполнения org_type_cd в таблице t_org  
+    SELECT  't_org.org_type_cd' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_org t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.org_type_cd, -1) NOT IN  ('INT', 'EXT') UNION ALL    
+-- Правильность заполнения name_type_id в таблице t_org_name_hist
+     SELECT  't_org_name_hist.name_type_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_org_name_hist t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.name_type_id, -1) <> 1 UNION ALL
+-- Правильность заполнения int_org_type_id в таблице t_int_org 
+     SELECT  't_int_org.int_org_type_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_int_org t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.int_org_type_id, -1) NOT IN (2,3) UNION ALL 
+-- Правильность заполнения int_org_categ_cd в таблице t_int_org  
+      SELECT  't_int_org.int_org_categ_cd' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_int_org t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.int_org_categ_cd, -1) <> 1 UNION ALL
+-- Правильность заполнения ext_org_type_id в таблице t_ext_org 
+      SELECT  't_ext_org.ext_org_type_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_ext_org t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.ext_org_type_id, -1) <> 5 
+     
+     UNION ALL
+-- Правильность заполнения pty_struct_type_id в таблице t_org_lvl 
+      SELECT  't_org_lvl.pty_struct_type_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_org_lvl t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.pty_struct_type_id, -1) <>  -1006 UNION ALL
+-- Правильность заполнения pty_rel_role_id в таблице t_pty_related  
+      SELECT  't_pty_related.pty_rel_role_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_pty_related t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.pty_rel_role_id, -1) <> 5 UNION ALL
+-- Правильность заполнения pty_id_categ_id в таблице t_pty_idfn  
+      SELECT  't_pty_idfn.pty_id_categ_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_pty_idfn t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.pty_id_categ_id, -1) <> 3 UNION ALL
+-- Правильность заполнения loc_type_cd в таблице T_LOC 
+     SELECT  'T_LOC.loc_type_cd' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_LOC t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.loc_type_cd, -1) <> 'POINT' UNION ALL
+-- Правильность заполнения chnl_inst_loc_usage_id в таблице t_chnl_inst_loc  
+      SELECT  't_chnl_inst_loc.chnl_inst_loc_usage_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_chnl_inst_loc t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.chnl_inst_loc_usage_id, -1) <> 4 UNION ALL
+-- Правильность заполнения pty_loc_usage_id в таблице t_pty_loc 
+     SELECT  't_pty_loc.pty_loc_usage_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_pty_loc t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.pty_loc_usage_id, -1) <> 4 UNION ALL 
+-- Правильность заполнения chnl_inst_text_type_id в таблице t_chnl_inst_text_hist 
+     SELECT  't_chnl_inst_text_hist.chnl_inst_text_type_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_chnl_inst_text_hist t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.chnl_inst_text_type_id, -1) NOT IN ( -1004, -1005)  UNION ALL    
+-- Правильность заполнения chnl_clsfctn_id в таблице t_chnl_class_val
+     SELECT  't_chnl_class_val.chnl_clsfctn_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_chnl_class_val t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.chnl_clsfctn_id, -1)  NOT IN (-1001,  - 1004, - 1005,  - 1007, - 1008, - 1009, - 1012) UNION ALL
+-- Правильность заполнения chnl_clsfctn_id в таблице t_chnl_chnl_class_assoc 
+     SELECT  't_chnl_chnl_class_assoc.chnl_clsfctn_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_chnl_chnl_class_assoc t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.chnl_clsfctn_id, -1) NOT IN (-1001, - 1002, - 1003,  - 1004, - 1005, -1006, - 1007, - 1008, - 1009, - 1010, - 1011, - 1012) UNION ALL
+-- Правильность заполнения pty_chnl_inst_role_id в таблице t_pty_chnl_inst 
+     SELECT  't_pty_chnl_inst.pty_chnl_inst_role_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_pty_chnl_inst t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.pty_chnl_inst_role_id, -1) NOT IN ( -1003, -1004, -1005) UNION ALL 
+-- Правильность заполнения days_type_id в таблице t_chnl_inst_oper_hours 
+      SELECT  't_chnl_inst_oper_hours.days_type_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_chnl_inst_oper_hours t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.days_type_id, -1) NOT IN (1, 2,3,4,5,6,7) UNION ALL 
+-- Правильность заполнения point_loc_type_cd в таблице t_point_loc
+      SELECT  't_point_loc.point_loc_type_cd' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_point_loc t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.point_loc_type_cd, -1) NOT IN ('IP', 'GS', 'ADR') UNION ALL
+-- Правильность заполнения ogr_lvl_id в таблице t_org_lvl 
+      SELECT  't_org_lvl.ogr_lvl_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_org_lvl t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.org_lvl_id, -1) NOT IN ( -1001, -1002) UNION ALL
+-- Правильность заполнения pty_idfn_type_id в таблице t_pty_idfn 
+      SELECT  't_pty_idfn.pty_idfn_type_id' AS error_value, COUNT (*) AS cnt FROM ft21_1_057_db_stg.ti_pty_idfn t
+     INNER JOIN ft21_1_057_db_stg.ti_info_system TIS ON TIS.deleted_flag = 'N' AND TIS.info_system_id = t.info_system_id AND TIS.info_system_type_cd = '057'
+     WHERE  t.deleted_flag = 'N' AND COALESCE(t.pty_idfn_type_id, -1) NOT IN ( -1004, -1016) 
+       ) tt
+   WHERE tt.cnt <> 0 

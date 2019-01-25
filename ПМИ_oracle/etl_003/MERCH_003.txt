@@ -1,0 +1,317 @@
+SELECT 't_chnl_inst_text_type' (VARCHAR(30)) TABLE_NAME, 'chnl_inst_text_type_id' (VARCHAR(30)) COLUMN_NAME, '-1004'(VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_inst_text_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_inst_text_type_id = - 1004 -- Разница часовых поясов с Москвой
+HAVING COUNT(*) <> 1   
+UNION ALL
+
+
+
+SELECT 't_chnl_inst_text_type' (VARCHAR(30)) TABLE_NAME, 'chnl_inst_text_type_id' (VARCHAR(30)) COLUMN_NAME, '-1005' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_inst_text_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_inst_text_type_id = - 1005 -- Место установки УС
+HAVING COUNT(*) <> 1   
+UNION ALL
+
+SELECT ' t_chnl_inst_stts_role_type' (VARCHAR(30)) TABLE_NAME, 'chnl_inst_stts_role_id' (VARCHAR(30)) COLUMN_NAME, '-1001' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_inst_stts_role_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_inst_stts_role_id = -1001-- Основной статус 
+HAVING COUNT(*) <> 1
+UNION ALL
+
+SELECT ' t_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1001' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1001-- Типы обслуживаемых карт 
+HAVING COUNT(*) <> 1
+UNION ALL 
+ 
+ SELECT ' t_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1002' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1002-- Признак наличия депозитного модуля
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+ 
+ 
+
+ SELECT 't_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1004' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1004-- Тип доступа к экземпляру канала 
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT 't_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1005' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1005-- Собственник банкомата
+HAVING COUNT(*) <> 1
+UNION ALL 
+ 
+ SELECT 't_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1006' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1006-- Признак перевода банкомата/ИТТ на централизованное обслуживание (для г. Москвы)
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+
+SELECT 't_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1007' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1007-- Категория места установки УС
+HAVING COUNT(*) <> 1
+UNION ALL 
+ 
+ SELECT ' t_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1008' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1008-- Категория вида размещения УС 
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT ' t_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1009' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id= -1009-- Категория способа установки УС 
+HAVING COUNT(*) <> 1
+UNION ALL 
+ 
+ SELECT ' t_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1010' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1010-- Признак размещения УС в тамбуре
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+
+
+SELECT ' t_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1011' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1011-- Признак наличия системы контроля доступа в тамбур
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+
+ SELECT ' t_chnl_class_scheme_type' (VARCHAR(30)) TABLE_NAME, 'chnl_clsfctn_id' (VARCHAR(30)) COLUMN_NAME, '-1012' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_chnl_class_scheme_type t 
+WHERE  t.deleted_flag = 'N'
+   AND chnl_clsfctn_id = -1012-- Тип режим работы УС 
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+
+
+ SELECT ' t_crncy_use_type' (VARCHAR(30)) TABLE_NAME, 'crncy_use_id' (VARCHAR(30)) COLUMN_NAME, '-1001' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_crncy_use_type t 
+WHERE  t.deleted_flag = 'N'
+   AND crncy_use_id = -1001--  Валюта с которой работает УС
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+ SELECT ' t_pty_type' (VARCHAR(30)) TABLE_NAME, 'pty_type_cd' (VARCHAR(30)) COLUMN_NAME,  'ORG' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_type t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_type_cd = 'ORG' --  Юридическое лицо
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+ SELECT ' t_org_type' (VARCHAR(30)) TABLE_NAME, 'org_type_cd' (VARCHAR(30)) COLUMN_NAME,  'INT' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_org_type t 
+WHERE  t.deleted_flag = 'N'
+   AND org_type_cd = 'INT' -- Внутренняя организация
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT ' t_name_type' (VARCHAR(30)) TABLE_NAME, 'name_type_id' (VARCHAR(30)) COLUMN_NAME,  '1' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_name_type t 
+WHERE  t.deleted_flag = 'N'
+   AND name_type_id = 1-- Полное наименование 
+HAVING COUNT(*) <> 1
+UNION ALL  
+
+SELECT ' t_int_org_type' (VARCHAR(30)) TABLE_NAME, 'int_org_type_id' (VARCHAR(30)) COLUMN_NAME,  '2' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_int_org_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND int_org_type_id = 2-- Отделение 
+HAVING COUNT(*) <> 1
+UNION ALL  
+
+SELECT ' t_int_org_type' (VARCHAR(30)) TABLE_NAME, 'int_org_type_id' (VARCHAR(30)) COLUMN_NAME,  '3' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_int_org_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND int_org_type_id = 3-- ВСП (доп.офис, опер. касса, ППКО, отдел ОПЕРУ ТБ, отдел ОСБ)
+HAVING COUNT(*) <> 1
+UNION ALL  
+
+SELECT ' t_int_org_categ' (VARCHAR(30)) TABLE_NAME, 'int_org_categ_id' (VARCHAR(30)) COLUMN_NAME,  '1' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_int_org_categ  t 
+WHERE  t.deleted_flag = 'N'
+   AND int_org_categ_cd = 1-- Подразделение СБ РФ
+HAVING COUNT(*) <> 1
+UNION ALL  
+
+SELECT ' t_ext_org_type' (VARCHAR(30)) TABLE_NAME, 'ext_org_type_id' (VARCHAR(30)) COLUMN_NAME,  '5' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_ext_org_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND ext_org_type_id = 5-- Прочая внешняя организация 
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_pty_chnl_inst_role_type' (VARCHAR(30)) TABLE_NAME, 'pty_chnl_inst_role_id' (VARCHAR(30)) COLUMN_NAME,  '- 1003' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_chnl_inst_role_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_chnl_inst_role_id = - 1003-- Подразделение банка, обслуживающее экземпляр канала 
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_pty_chnl_inst_role_type' (VARCHAR(30)) TABLE_NAME, 'pty_chnl_inst_role_id' (VARCHAR(30)) COLUMN_NAME,  '- 1004' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_chnl_inst_role_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_chnl_inst_role_id = - 1004--Подразделение банка, проводящее расчеты  по операциям через экземпляр канала  
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_pty_chnl_inst_role_type' (VARCHAR(30)) TABLE_NAME, 'pty_chnl_inst_role_id' (VARCHAR(30)) COLUMN_NAME,  '- 1005' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_chnl_inst_role_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_chnl_inst_role_id = - 1005-- Мерчант, которому принадлежит терминал
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_day_of_week' (VARCHAR(30)) TABLE_NAME, 'day_of_week_num' (VARCHAR(30)) COLUMN_NAME,  '1' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_day_of_week  t 
+WHERE  t.deleted_flag = 'N'
+   AND day_of_week_num = 1 -- Понедельник
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_day_of_week' (VARCHAR(30)) TABLE_NAME, 'day_of_week_num' (VARCHAR(30)) COLUMN_NAME,  '2' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_day_of_week  t 
+WHERE  t.deleted_flag = 'N'
+   AND day_of_week_num = 2 -- Вториник
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_day_of_week' (VARCHAR(30)) TABLE_NAME, 'day_of_week_num' (VARCHAR(30)) COLUMN_NAME,  '3' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_day_of_week  t 
+WHERE  t.deleted_flag = 'N'
+   AND day_of_week_num = 3 -- Среда
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_day_of_week' (VARCHAR(30)) TABLE_NAME, 'day_of_week_num' (VARCHAR(30)) COLUMN_NAME,  '4' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_day_of_week  t 
+WHERE  t.deleted_flag = 'N'
+   AND day_of_week_num = 4 -- Четверг
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_day_of_week' (VARCHAR(30)) TABLE_NAME, 'day_of_week_num' (VARCHAR(30)) COLUMN_NAME,  '5' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_day_of_week  t 
+WHERE  t.deleted_flag = 'N'
+   AND day_of_week_num = 5 -- Пятница
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_day_of_week' (VARCHAR(30)) TABLE_NAME, 'day_of_week_num' (VARCHAR(30)) COLUMN_NAME,  '6' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_day_of_week  t 
+WHERE  t.deleted_flag = 'N'
+   AND day_of_week_num = 6-- Суббота
+HAVING COUNT(*) <> 1
+UNION ALL   
+
+SELECT 't_day_of_week' (VARCHAR(30)) TABLE_NAME, 'day_of_week_num' (VARCHAR(30)) COLUMN_NAME,  '7' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_day_of_week  t 
+WHERE  t.deleted_flag = 'N'
+   AND day_of_week_num = 7 -- Воскресение
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+ SELECT 't_point_loc_type' (VARCHAR(30)) TABLE_NAME, 'point_loc_type_cd' (VARCHAR(30)) COLUMN_NAME,  'IP' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_point_loc_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND point_loc_type_cd = 'IP' -- IP адрес
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+ SELECT 't_point_loc_type' (VARCHAR(30)) TABLE_NAME, 'point_loc_type_cd' (VARCHAR(30)) COLUMN_NAME,  'GS' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_point_loc_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND point_loc_type_cd = 'GS' -- Географические координаты
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+ SELECT 't_point_loc_type' (VARCHAR(30)) TABLE_NAME, 'point_loc_type_cd' (VARCHAR(30)) COLUMN_NAME,  'ADR' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_point_loc_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND point_loc_type_cd = 'ADR' --  Адрес
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+ SELECT 't_pty_struct_type' (VARCHAR(30)) TABLE_NAME, 'pty_struct_type_id' (VARCHAR(30)) COLUMN_NAME,  '- 1006' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_struct_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_struct_type_id = - 1006--  Структура торговых организаций
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT 't_org_lvl_type' (VARCHAR(30)) TABLE_NAME, 'org_lvl_id' (VARCHAR(30)) COLUMN_NAME,  '- 1001' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_org_lvl_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND org_lvl_id = - 1001--  Торговая организация
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT 't_org_lvl_type' (VARCHAR(30)) TABLE_NAME, 'org_lvl_id' (VARCHAR(30)) COLUMN_NAME,  '- 1002' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_org_lvl_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND org_lvl_id = - 1002--  Торговая точка
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT 't_pty_rel_role' (VARCHAR(30)) TABLE_NAME, 'pty_rel_role _id' (VARCHAR(30)) COLUMN_NAME,  '5' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_rel_role  t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_rel_role_id = 5 --  Головная организация
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT ' t_pty_idfn_type' (VARCHAR(30)) TABLE_NAME, 'pty_idfn_type_id' (VARCHAR(30)) COLUMN_NAME,  '- 1004' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_idfn_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_idfn_type_id = - 1004 --  ИНН
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT ' t_pty_idfn_type' (VARCHAR(30)) TABLE_NAME, 'pty_idfn_type_id' (VARCHAR(30)) COLUMN_NAME,  '- 1016' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_idfn_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND pty_idfn_type_id = - 1016 --  Номер мерчанта, присвоенный American Express
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT ' t_pty_idfn_cat' (VARCHAR(30)) TABLE_NAME, 'pty_id_categ_id' (VARCHAR(30)) COLUMN_NAME,  '3' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_pty_idfn_cat  t 
+WHERE  t.deleted_flag = 'N'
+   AND  pty_id_categ_id = 3 --  Внутренняя идентификация
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT ' t_loc_type' (VARCHAR(30)) TABLE_NAME, 'loc_type_cd' (VARCHAR(30)) COLUMN_NAME,  'POINT' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_loc_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND  loc_type_cd = 'POINT' --  Адрес/Номер 
+HAVING COUNT(*) <> 1
+UNION ALL 
+
+SELECT ' t_loc_usage_type' (VARCHAR(30)) TABLE_NAME, 'loc_usage_id' (VARCHAR(30)) COLUMN_NAME,  '4' (VARCHAR(30)) constant_value, CASE WHEN COUNT(*) = 0 THEN 'no constant' ELSE 'too much values' END problem_desc
+FROM ft21_1_057_db_stg.ti_loc_usage_type  t 
+WHERE  t.deleted_flag = 'N'
+   AND  loc_usage_id = 4 -- Фактическая локация(Адрес торговой точки, IP address и т.п.)
+HAVING COUNT(*) <> 1

@@ -1,0 +1,27 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM FT21_1_057_DB_stg.ti_chnl_inst_stts_type t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM FT21_1_057_DB_stg.B0571131410005_ACQ_ORG_STATE t 
+    ) AS z2 
+  
+--и  
+
+SELECT a.ID, c.chnl_inst_stts_type_id  , c.chnl_inst_stts_type_desc
+FROM FT21_1_057_DB_stg.B0571131410005_ACQ_ORG_STATE a
+LEFT JOIN FT21_1_057_DB_tmd.k_chnl_inst_stts_type_nk02 b ON a.ID = b.NK02_ORG_STATE_ID 
+LEFT JOIN FT21_1_057_DB_stg.ti_chnl_inst_stts_type c ON c.chnl_inst_stts_type_id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM FT21_1_057_DB_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE 
+c.chnl_inst_stts_type_id  IS NULL OR 
+
+(a.name_cyr||' (активно: '||a.active||', закрыто: '
+                                                                                              ||a.closed||', нормальная работоспосoбность: '
+                                                                                              ||a.def_state||', перевыпуск: '||a.reemb||
+                                                                                              ',  работоспосoбность: '||a.working||')'    <> c.chnl_inst_stts_type_desc)

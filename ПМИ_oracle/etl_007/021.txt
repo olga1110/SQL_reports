@@ -1,0 +1,23 @@
+SELECT Count_Detail, Count_Detail_1,  Count_Detail - Count_Detail_1 AS dif     
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_crncy t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	
+		) AS z1,
+	(
+	SELECT COUNT (DISTINCT a.CURRENCY)  AS Count_Detail_1
+	FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a 
+WHERE a.CURRENCY IS NOT NULL 
+ ) AS z2
+
+--------------------------------------------------------------------
+SELECT a.ACQ_TERMINAL_LIST_ID, c.crncy_id,  a.CURRENCY  FROM ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a  
+INNER JOIN ft21_1_057_db_tmd.k_crncy_nk10  b ON a.CURRENCY = b.NK10_TERM_CURR  
+LEFT JOIN ft21_1_057_db_stg.ti_crncy  c ON c.crncy_id = b.tgt_id 
+AND info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag ='N') AND deleted_flag = 'N' 
+WHERE a.CURRENCY is not null AND c.crncy_id NOT IN (SELECT DISTINCT a.CURRENCY FROM  ft21_1_057_db_stg.B0571131410001_ACQ_TERMINAL a WHERE a.CURRENCY IS NOT NULL) 
+OR c.crncy_id  IS NULL  	 
+

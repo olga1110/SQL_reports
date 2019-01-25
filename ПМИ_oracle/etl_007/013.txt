@@ -1,0 +1,44 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_point_loc t
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND t.point_Loc_Type_Cd= 'ADR' 
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.ti_STREET_ADDR  t 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+AND deleted_flag = 'N'
+
+ ) AS z2   
+
+--è  
+
+SELECT
+ a.ACQ_TERMINAL_LIST_ID, c.STREET_ADDR_ID 
+FROM ft21_1_057_db_stg.B0571131410001_ACQ_terminal a 
+INNER JOIN ft21_1_057_db_stg.B0571131410003_ACQ_owner d ON a.ACQ_OWNER_LIST_ID = d.ACQ_OWNER_LIST_ID
+LEFT JOIN ft21_1_057_db_stg.B0571131410008_ACQ_TOWN e ON e. ID = d.ACQ_TOWN_ID 
+INNER JOIN ft21_1_057_db_stg.B0571131410010_ACQ_TOWN_TYPE g ON g. ID = e.ACQ_TOWN_TYPE_ID
+LEFT JOIN ft21_1_057_db_tmd.K_loc_nk66 b ON a.ACQ_terminal_LIST_ID = b.NK66_TERM_TERM_LIST_ID AND NK66_CONST = 3 
+LEFT JOIN ft21_1_057_db_stg.ti_STREET_ADDR   c ON c.STREET_ADDR_ID = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE   (COALESCE(c.ADDR_LINE_1_TXT, NULL,-1) <> COALESCE(g.NAME_CYR||' '||e.NAME_CYR||' '|| d.ADDRESS_CYR, NULL,-1) ) 
+OR (d.ADDRESS_CYR IS NOT NULL AND c.STREET_ADDR_ID  IS NULL) 
+
+
+SELECT*
+FROM ft21_1_057_db_stg.B0571131410010_ACQ_TOWN_TYPE a, ft21_1_057_db_stg.B0571131410008_ACQ_TOWN b
+WHERE a. ID = b.ACQ_TOWN_TYPE_ID
+
+SEL COUNT (*)
+FROM
+ ft21_1_057_db_stg.B0571131410008_ACQ_TOWN e 
+LEFT JOIN ft21_1_057_db_stg.B0571131410010_ACQ_TOWN_TYPE g ON g. ID = e.ACQ_TOWN_TYPE_ID
+WHERE ACQ_TOWN_TYPE_ID IS NULL
+
+
+

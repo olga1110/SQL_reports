@@ -1,0 +1,15 @@
+SELECT Count_Detail, Count_Detail_1,  Count_Detail - Count_Detail_1 AS dif -- проверка равенства количества строк в  t_org  и t_ext_org 
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_org
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N'
+	AND org_type_cd = 'EXT' 
+		) AS z1,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.ti_ext_org a 
+WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+AND deleted_flag = 'N'
+ ) AS z2

@@ -1,0 +1,23 @@
+SELECT Count_Detail, Count_Detail_1, Count_Detail-Count_Detail_1 AS dif
+FROM 
+	(
+	SELECT COUNT (*) AS Count_Detail
+	FROM ft21_1_057_db_stg.ti_manuf_mdl t 
+	WHERE  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')
+	AND deleted_flag = 'N' 	
+		) AS z1	,
+	(
+	SELECT COUNT(*) AS Count_Detail_1
+	FROM ft21_1_057_db_stg.B0571131410004_ACQ_TER_MODEL t 
+   ) AS z2 
+  
+--è  
+
+SELECT a.ID,  c.Mdl_Id FROM ft21_1_057_db_stg.B0571131410004_ACQ_TER_MODEL a 
+LEFT JOIN ft21_1_057_db_tmd.k_manuf_model_nk01 b ON a.Id = b.NK01_TERM_MODEL_ID 
+LEFT JOIN ft21_1_057_db_stg.ti_manuf_mdl c ON c.Mdl_Id = b.tgt_id 
+AND  info_system_id IN (SELECT info_system_id FROM ft21_1_057_db_stg.ti_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N') AND deleted_flag = 'N' 
+WHERE c.Mdl_Id IS NULL OR c.Mdl_Desc <> a.NAME_SHORT OR c.Manuf_Mdl_Num <> a.WAY_NAME 
+
+
+

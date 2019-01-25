@@ -1,0 +1,29 @@
+-----------------------------------------------------------------------------------------ВСП--------------------------------------------------------------------------------------------------- 
+SELECT a.ACQ_OWNER_LIST_ID, c.pty_id 
+FROM prdn_db_stg.B0571131410003_ACQ_OWNER a 
+LEFT JOIN prdn_db_tmd.K_PTY_NK82 b ON a.CB_CODE||’/’||a.FILIAL = b.NK82_OWN_CODE 
+LEFT JOIN prdn_db_dwh.t_pty c ON c.pty_id = b.tgt_id AND  info_system_id IN (SELECT info_system_id FROM prdn_db_dwh.t_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')  AND deleted_flag = 'N'
+AND a.FILIAL IS NOT NULL
+WHERE c.pty_id IS NULL
+
+-----------------------------------------------------------------------------------------ОСБ-------------------------------------------------------------------------------------------------- 
+
+SELECT a.CB_CODE, c.pty_id  
+FROM prdn_db_stg.B0571131410006_ACQ_WAY4_FI a 
+LEFT JOIN prdn_db_tmd.K_PTY_NK77 b ON a.CB_CODE = b.NK77_WAY4_CODE 
+LEFT JOIN prdn_db_dwh.t_pty c ON c.pty_id = b.tgt_id AND  info_system_id IN (SELECT info_system_id FROM prdn_db_dwh.t_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')  AND deleted_flag = 'N' 
+WHERE c.pty_id IS NULL
+
+----------------------------------------------------------------------------------------- Мерчант (торговая организация) -------------------------------------------------------------------------------------------------- 
+
+SELECT a.ACQ_MERCHANT_LIST_ID, c.pty_id 
+FROM prdn_db_stg.B0571131410001_ACQ_TERMINAL a 
+INNER JOIN ft21_1_057_db_stg.B0571131410003_ACQ_OWNER d ON a.ACQ_OWNER_LIST_ID = d.ACQ_OWNER_LIST_ID
+LEFT JOIN prdn_db_tmd.K_PTY_NK83 b ON a.ACQ_MERCHANT_LIST_ID = b.NK83_TERM_MERCH_LIST_ID 
+LEFT JOIN prdn_db_dwh.t_pty c ON c.pty_id = b.tgt_id AND  info_system_id IN (SELECT info_system_id FROM prdn_db_dwh.t_info_system WHERE info_system_type_cd = '057' AND deleted_flag = 'N')  AND deleted_flag = 'N' 
+AND  a.TERMINAL_TYPE = 'POS SALE' AND 
+WHERE c.pty_id IS NULL 
+
+-- A.ACQ_OWNER_LIST_ID = B.ACQ_OWNER_LIST_ID and b.TERMINAL_TYPE = 'POS SALE' and
+-- A.ACQ_OWNER_LIST_ID IN (SELECT ACQ_OWNER_LIST_ID_PARENT FROM acq_owner a WHERE  a.ACQ_OWNER_LIST_ID_PARENT IS NOT NULL)
+----------------------------------------------------------------------------------------- Мерчант (торговая точка) --------------------------------------------------------------------------------------------------
